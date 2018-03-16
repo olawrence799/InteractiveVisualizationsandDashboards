@@ -5,7 +5,6 @@ from flask import Flask, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 import pandas as pd
-# names = pd.read_csv('///db/Belly_Button_Biodiversity_Metadata.csv')
 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
@@ -47,23 +46,12 @@ class Name(db.Model):
     LOCATION = db.Column(db.Text)
     SAMPLEID = db.Column(db.Integer)
     WFREQ = db.Column(db.Integer)
-    # title = db.Column(db.String)
-    # classification = db.Column(db.String)
-    # timestamp = db.Column(db.String)
-    # latitude = db.Column(db.Float)
-    # longitude = db.Column(db.Float)
 
 class Otu(db.Model):
     __tablename__ = 'otu'
 
     id = db.Column(db.Integer, primary_key=True)
     lowest_taxonomic_unit_found = db.Column(db.Text)
-
-# class Otu_Sample(db.Model):
-#     __tablename__ = 'samples'
-
-#     id = db.Column(db.Integer, primary_key=True)
-
 
 
 # Create database classes
@@ -85,15 +73,12 @@ def names():
     sel = [
         func.distinct(Name.SAMPLEID)
     ]
-    results = db.session.query(*sel)#.\
-        # func.distinct(Names.id).all()
+    results = db.session.query(*sel)
 
     names = [row[0] for row in results]
     for i in range(0,len(names)):
         names[i] = "BB_" + str(names[i])
         i = i + 1
-    # # sightings = [row[1] for row in results]
-    # results = session.query()
     return jsonify(names)
 
 @app.route("/otu")
@@ -101,15 +86,13 @@ def otus():
     sel = [
         Otu.lowest_taxonomic_unit_found
     ]
-    results = db.session.query(*sel)#.\
-        # func.distinct(Names.id).all()
+    results = db.session.query(*sel)
 
     otus = [row[0] for row in results]
     return jsonify(otus)
 
 @app.route("/metadata/<sample>")
 def sample(sample):
-    # sel = [Name.AGE, Name.BBTYPE, Name.ETHNICITY, Name.GENDER, Name.LOCATION, Name.SAMPLEID]
     sample_trim = sample[3:]
     results = db.session.query(Name.AGE, Name.BBTYPE, Name.ETHNICITY, Name.GENDER, Name.LOCATION, Name.SAMPLEID).filter(Name.SAMPLEID==(sample_trim)).all()
     age = [row[0] for row in results][0]

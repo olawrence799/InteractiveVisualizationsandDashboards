@@ -1,0 +1,111 @@
+<!--
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Belly Button Biodiversity</title>
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+    <div class="container top-center">
+        <div class="jumbotron top-center">
+                <h1 align="center">Belly Button Biodiversity Dashboard</h1>
+                <h6 align="center">Use the interactive charts below to explore the dataset</h6>
+                <!-- <div class="row container">
+                    <div class="col-md-12 top-center">
+                        <a href="/scrape" class="btn btn-info" role="button">Scrape New Data</a>
+                    </div>
+                </div> -->
+        <!-- </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <!-- <div id="pie"></div>
+                <script src="{{ url_for('static', filename='js/app.js') }}"></script> -->
+                <!-- <select id="selDataset" onchange="optionChanged(this.value)">
+                    <option value="dataset1">United States</option>
+                    <option value="dataset2">UK</option>
+                    <option value="dataset3">Canada</option>
+                </select>
+                <div id="pie"></div>
+                <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+            </div> --> 
+            <!-- <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="box red"><img src="https://github.com/olawrence799/homework12_Lattitude/blob/master/LatitudeVsHumidity.png?raw=true" width="100%" alt="Latitude versus Humidity"></div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="box red"><img src="https://github.com/olawrence799/homework12_Lattitude/blob/master/LatitudeVsHumidity.png?raw=true" width="100%" alt="Latitude versus Humidity"></div>
+            </div> 
+        </div>
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Belly Button Biodiversity</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <script type="text/javascript">
+    var queryURL = "http://127.0.0.1:5000/names";
+    d3.json(queryURL, function(error, response) {
+      //console.log('error:', error);
+      //if (error) return console.warn(error);
+      console.log(response);
+      var select = document.getElementById("selDataset")
+      for(var i = 0; i < response.length; i++){
+          var item = response[i];
+          var el = document.createElement("option");
+          el.textContent = item;
+          el.value = item;
+          select.appendChild(el);
+      }
+    })
+    </script>
+        <div class="container top-center">
+                <div class="jumbotron top-center">
+                        <h1 align="center">Belly Button Biodiversity Dashboard</h1>
+                        <h6 align="center">Use the interactive charts below to explore the dataset</h6>
+                </div>
+        </div>
+        <div class="container top-center">
+                <div class="col-xs-2 col-sm-2 col-md-2">
+                    <div class="jumbotron top-center">
+                            <p align="center"><bold>SELECT Sample</bold></p>
+                        <select id="selDataset" onchange="optionChanged(this.value)"></select>
+                    </div>
+                </div>
+        </div>
+    
+    <div id="pie"></div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

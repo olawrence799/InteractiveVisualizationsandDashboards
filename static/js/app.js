@@ -1,17 +1,11 @@
 function init() {
-    var default_url = '/samples/BB_940'
-    Plotly.d3.json(default_url, function(error, response) {
-        if (error) return console.warn(error);
-        var data = [response.sample_values]
-        .slice(0,10);
-    })
-    // var data = [
-    //   {
-    //     values: [19, 26, 70, 73],
-    //     labels: ['Spotify', 'Soundcloud', 'Pandora', 'Itunes'],
-    //     type: 'pie',
-    //   },
-    // ];
+    var data = [
+      {
+        values: [1],
+        labels: [1],
+        type: 'pie',
+      },
+    ];
   
     var layout = {
       height: 600,
@@ -19,69 +13,96 @@ function init() {
     };
   
     Plotly.plot('pie', data, layout);
-  }
-
-//   var names_url = '/samples/<sample>'
-  var samples_url = '/otu'
   
-
-  function updatePlotly(newdata) {
-    var PIE = document.getElementById('pie');
-    Plotly.restyle(PIE, 'values', [newdata]);
-  }
   
-  function optionChanged(route) {
-    console.log(route);
-    Plotly.d3.json(`/samples/${route}`, function(error, data) {
-        console.log("newdata", data);
-        updatePlotly(data);
-    });
-    // var data = [];
-    // switch (dataset) {
-    //   case 'BB_941':
-    //     data = [10, 30, 40, 20];
-    //     break;
-    //   default:
-    //     data = [];
-    // }
-    // updatePlotly(data);
+    var data_bubble = [
+      {
+        x: [1],
+        y: [1],
+        mode: 'markers',
+        type: 'scatter',
+      },
+    ];
+  
+    var bubble_layout = {
+      xaxis: {
+          title: 'OTU ID'
+      },
+      yaxis: {
+          ttile: 'Sample Size'
+      },
+      // width: 800,
+      // height: 600
+    };
+  
+    Plotly.plot('scatter', data_bubble, bubble_layout);
   }
   
   init();
   
-
-// /* data route */
-// var url = '/data';
-
-// function buildPlot() {
-//   Plotly.d3.json(url, function(error, response) {
-//     console.log(response);
-//     var trace1 = {
-//       type: 'scatter',
-//       mode: 'lines',
-//       name: 'Bigfoot Sightings',
-//       x: response.years,
-//       y: response.sightings,
-//       line: {
-//         color: '#17BECF',
-//       },
-//     };
-
-//     var data = [trace1];
-
-//     var layout = {
-//       title: 'Bigfoot Sightings Per Year',
-//       xaxis: {
-//         type: 'date',
-//       },
-//       yaxis: {
-//         autorange: true,
-//         type: 'linear',
-//       },
-//     };
-
-//     Plotly.newPlot('plot', data, layout);
-//   });
-// }
-
-// buildPlot();
+  function updatePlotly(newdata) {
+      console.log('Data:', newdata);
+    var PIE = document.getElementById('pie');
+    Plotly.restyle(PIE, newdata, 0);
+  }
+  
+  function updatePlotlyBubble(newdata) {
+      console.log('Data:', newdata);
+    var BUBBLE = document.getElementById('scatter');
+    Plotly.restyle(BUBBLE, newdata, 0);
+  }
+  
+  function optionChanged(sample) {
+      console.log('sample: ' + sample);
+      var url = '/samples/'+sample;
+      var url_otu = '/otu'
+      var url_meta = '/metadata/'+sample
+    Plotly.d3.json(url, function(error, response) {
+        Plotly.d3.json(url_otu, function(error, response_otu) {
+            console.log(response_otu);
+        
+      console.log(response);
+      var trace1 = {
+        type: 'pie',
+         values: [response[0].sample_values.slice(0,10)],
+         labels: [response[0].otu_ids.slice(0,10)],
+         hovertext: [response_otu.slice(0,10)],
+      };
+  
+      var trace2 = {
+          type: 'scatter',
+          y: [response[0].sample_values],
+          x: [response[0].otu_ids],
+          hovertext: [response_otu],
+          mode: 'markers',
+          marker: {
+              size: response[0].sample_values.map(data_scatter=>data_scatter*30),
+              sizemode: 'area',
+              color: response[0].otu_ids,
+          }
+      };
+  
+      var data = trace1;
+      var data_scatter = trace2;
+       updatePlotly(data);
+       updatePlotlyBubble(data_scatter);
+    });
+  });
+      d3.json(url_meta, function(error, response) {
+          console.log(response);
+      var meta_table = document.getElementById("sample_metadata")
+      meta_table.innerHTML = "";
+      for(var key in response) {
+          var row = document.createElement("tr");
+          var el = document.createElement("th");
+          var el2 = document.createElement("td");
+          el.textContent = key
+          el2.textContent = " " + response[key];
+          row.appendChild(el);
+          row.appendChild(el2);
+          meta_table.appendChild(row);
+      }
+      })
+  }
+  
+  optionChanged("BB_940");

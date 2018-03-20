@@ -8,8 +8,8 @@ function init() {
     ];
   
     var layout = {
-      height: 600,
-      width: 800,
+      // height: 600,
+      // width: 800,
     };
   
     Plotly.plot('pie', data, layout);

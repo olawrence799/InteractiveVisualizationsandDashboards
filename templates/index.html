@@ -31,41 +31,39 @@
           select.appendChild(el);
       }
     })
-
-    
-
     </script>
-        <div class="container top-center">
-                <div class="jumbotron top-center">
-                        <h1 align="center">Belly Button Biodiversity Dashboard</h1>
-                        <h6 align="center">Use the interactive charts below to explore the dataset</h6>
-                </div>
-        </div>
-        <div class="container top-center">
-                <div class="col-xs-2 col-sm-2 col-md-2">
-                    <div class="jumbotron top-center">
-                            <p align="center"><bold>SELECT Sample</bold></p>
-                        <select id="selDataset" onchange="optionChanged(this.value)"></select>
-                    </div>
-                </div>
-        </div>
-    
-    
-    <div class="container">
+
+    <div class="container top-center">
+            <div class="jumbotron top-center">
+                    <h1 align="center">Belly Button Biodiversity Dashboard</h1>
+                    <h6 align="center">Use the interactive charts below to explore the dataset</h6>
+            </div>
+    </div>
+    <div class="container top-center">
         <div class="row">
+            <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="jumbotron top-center">
+                        <p align="center">SELECT Sample</p>
+                    <select id="selDataset" onchange="optionChanged(this.value)" align="center"></select>
+                </div>
+            </div>
             <div class="col-xs-8 col-sm-8 col-md-8">
-                        <div>
-                            <table class="table" id="sample_metadata"></table>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div id="pie"></div>
-                        </div>
+                <table class="table" id="sample_metadata"></table>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="container top-center">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-12">
+                <div id="pie"></div>
             </div>
         </div>
         <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                <div id="scatter"></div>
-                </div>
+            <div class="col-xs-6 col-sm-6 col-md-12">
+            <div id="scatter"></div>
+            </div>
         </div>
     </div>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>

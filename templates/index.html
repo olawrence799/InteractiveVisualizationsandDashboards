@@ -19,7 +19,7 @@
 </head>
 <body>
     <script type="text/javascript">
-    var queryURL = "http://127.0.0.1:5000/names";
+    var queryURL = "/names";
     d3.json(queryURL, function(error, response) {
       console.log(response);
       var select = document.getElementById("selDataset")

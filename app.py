@@ -22,7 +22,8 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db/belly_button_biodiversity.sqlite"
+# app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db/belly_button_biodiversity.sqlite"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db/belly_button_biodiversity.sqlite"
 
 db = SQLAlchemy(app)
 
